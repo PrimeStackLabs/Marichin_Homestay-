@@ -1,0 +1,25 @@
+import mongoose from 'mongoose';
+
+const newsletterSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+    },
+    isActive: {
+      type: Boolean,
+      default: true
+    }
+  },
+  {
+    timestamps: true
+  }
+);
+
+// email index created via unique: true
+
+export const Newsletter = mongoose.model('Newsletter', newsletterSchema);

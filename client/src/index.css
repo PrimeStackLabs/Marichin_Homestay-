@@ -1,0 +1,432 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* REFINED PALETTE */
+  --forest-deep: #0F2A20;       /* Main dark sections */
+  --forest-rich: #1B4332;       /* Cards on dark sections, hover states */
+  --forest-footer: #0A1A13;     /* Footer background */
+  --ivory: #FAF6EC;             /* Main light background */
+  --linen: #F1E9D8;             /* Alternate light background */
+  --sage: #DDE6D3;              /* Subtle accent section (max 1 per page) */
+  --gold: #B8964A;              /* Buttons, borders, icons */
+  --gold-light: #D9BC7A;        /* Gold hover state */
+  --gold-gradient-start: #C8A55A;
+  --gold-gradient-end: #B8964A;
+  --terracotta: #A8654A;         /* Tiny accents, small labels, hairline dividers */
+  --text-dark: #1A2A21;         /* Main text on light */
+  --text-muted-light: #5F6B62;  /* Muted body text on light */
+  --text-on-dark: #F3EDDD;      /* Headings/titles on dark */
+  --text-muted-dark: #B9C4B8;   /* Muted text on dark */
+
+  /* Backward Compatibility Aliases */
+  --deep-forest: var(--forest-deep);
+  --dark-emerald: var(--forest-rich);
+  --footer-bg: var(--forest-footer);
+  --warm-ivory: var(--ivory);
+  --soft-cream: var(--linen);
+  --sage-green: var(--sage);
+  --champagne-gold: var(--gold);
+  --light-gold: var(--gold-light);
+  --dark-text: var(--text-dark);
+  --muted-text: var(--text-muted-light);
+  --white: #FFFFFF;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  @media (max-width: 640px) {
+    html {
+      scroll-padding-top: 76px;
+    }
+  }
+
+  :target {
+    scroll-margin-top: 84px;
+  }
+
+  @media (max-width: 640px) {
+    :target {
+      scroll-margin-top: 76px;
+    }
+  }
+  
+  body {
+    background-color: var(--ivory);
+    color: var(--text-dark);
+    overflow-x: clip;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Universal Headings Hierarchy: Playfair Display for elegant luxury hospitality */
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em;
+    line-height: 1.18;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  h4 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+  }
+
+  h5, h6 {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+  }
+
+  nav a, nav button, .subheading {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+
+  p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 1rem;
+    letter-spacing: -0.005em;
+  }
+
+  button, .btn, input[type="button"], input[type="submit"] {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+
+  small, caption, .caption, label {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Custom boutique scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--linen);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 4px;
+    border: 1px solid rgba(184, 150, 74, 0.4);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-light);
+  }
+}
+
+@layer utilities {
+  /* Subtle Dark Radial Gradient (depth on dark sections) */
+  .bg-dark-radial {
+    background: radial-gradient(120% 120% at 85% 15%, #184131 0%, #0F2A20 100%);
+  }
+
+  /* Section Background Classes with Strict Rhythm */
+  .section-dark {
+    background: radial-gradient(120% 120% at 85% 15%, #184131 0%, #0F2A20 100%);
+    color: var(--text-on-dark);
+  }
+
+  .section-ivory {
+    background-color: var(--ivory);
+    color: var(--text-dark);
+  }
+
+  .section-linen {
+    background-color: var(--linen);
+    color: var(--text-dark);
+  }
+
+  .section-sage {
+    background-color: var(--sage);
+    color: var(--text-dark);
+  }
+
+  .section-footer {
+    background-color: var(--forest-footer);
+    color: var(--text-on-dark);
+  }
+
+  /* Backward compatibility section classes */
+  .section-forest {
+    background: radial-gradient(120% 120% at 85% 15%, #184131 0%, #0F2A20 100%);
+    color: var(--text-on-dark);
+  }
+
+  /* CARDS:
+     On Dark section -> Forest Rich card with 1px border of gold at 25% opacity and soft shadow */
+  .card-on-dark, .card-on-forest, .floating-forest-card, .glass-card {
+    background-color: #1B4332;
+    border: 1px solid rgba(184, 150, 74, 0.25);
+    box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.45), 0 0 18px rgba(184, 150, 74, 0.08);
+    color: #F3EDDD;
+    border-radius: 1.25rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-on-dark:hover, .card-on-forest:hover, .floating-forest-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(184, 150, 74, 0.5);
+    box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.6), 0 0 24px rgba(184, 150, 74, 0.16);
+  }
+
+  /* On Light section (Ivory / Linen / Sage) -> White card with soft wide shadow & 1px Linen border */
+  .card-on-light, .card-on-ivory, .card-on-sage {
+    background-color: #FFFFFF;
+    border: 1px solid #F1E9D8;
+    box-shadow: 0 10px 40px rgba(15, 42, 32, 0.08);
+    color: #1A2A21;
+    border-radius: 1.25rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-on-light:hover, .card-on-ivory:hover, .card-on-sage:hover {
+    transform: translateY(-3px);
+    border-color: rgba(184, 150, 74, 0.45);
+    box-shadow: 0 16px 45px rgba(15, 42, 32, 0.12), 0 0 20px rgba(184, 150, 74, 0.1);
+  }
+
+  /* BUTTONS:
+     Primary button: subtle gold gradient (#C8A55A to #B8964A), dark green text, 12px radius, small lift and shadow on hover */
+  .btn-gold-primary {
+    background: linear-gradient(135deg, #C8A55A 0%, #B8964A 100%);
+    color: #0F2A20;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 0.75rem 1.75rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px rgba(184, 150, 74, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+  }
+  .btn-gold-primary:hover {
+    background: linear-gradient(135deg, #D9BC7A 0%, #C8A55A 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(184, 150, 74, 0.45);
+  }
+
+  /* Secondary button on Light section: transparent with 1.5px Forest Deep border */
+  .btn-secondary-light {
+    background: transparent;
+    color: #0F2A20;
+    border: 1.5px solid #0F2A20;
+    border-radius: 12px;
+    padding: 0.7rem 1.5rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+  }
+  .btn-secondary-light:hover {
+    background: #0F2A20;
+    color: #FAF6EC;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(15, 42, 32, 0.2);
+  }
+
+  /* Secondary button on Dark section: transparent with 1.5px Gold border */
+  .btn-secondary-dark {
+    background: transparent;
+    color: #D9BC7A;
+    border: 1.5px solid #B8964A;
+    border-radius: 12px;
+    padding: 0.7rem 1.5rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+  }
+  .btn-secondary-dark:hover {
+    background: #B8964A;
+    color: #0F2A20;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 18px rgba(184, 150, 74, 0.4);
+  }
+
+  /* Small uppercase boutique labels (letter spacing 0.18em) */
+  .label-boutique {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .label-terracotta {
+    color: #A8654A;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .label-gold {
+    color: #B8964A;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .divider-hairline-gold {
+    border-bottom: 1px solid rgba(184, 150, 74, 0.2);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ==========================================================================
+   HERO FACILITIES STRIP ANIMATION
+   Fades in and slides up 400ms after the hero buttons, respecting prefers-reduced-motion.
+   ========================================================================== */
+@keyframes stripSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-strip-in {
+  animation: stripSlideUp 550ms cubic-bezier(0.16, 1, 0.3, 1) 400ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-strip-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT / PDF ISOLATION STYLES
+   - Booking Pass prints full-bleed edge-to-edge on dark forest cardstock.
+   - Policy / Safety pages print cleanly on light paper with dark readable text.
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    color: #1A2A21 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body.print-booking-pass,
+  body:has([data-booking-pass-card="true"]):not(:has(.policy-printable)) {
+    background: #0F2A20 !important;
+    color: #F3EDDD !important;
+  }
+
+  body.print-booking-pass *,
+  body:has([data-booking-pass-card="true"]):not(:has(.policy-printable)) * {
+    visibility: hidden !important;
+  }
+
+  body.print-booking-pass [data-booking-pass-card="true"],
+  body.print-booking-pass [data-booking-pass-card="true"] *,
+  body:has([data-booking-pass-card="true"]):not(:has(.policy-printable)) [data-booking-pass-card="true"],
+  body:has([data-booking-pass-card="true"]):not(:has(.policy-printable)) [data-booking-pass-card="true"] * {
+    visibility: visible !important;
+  }
+
+  [data-booking-pass-card="true"] {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    background: #0F2A20 !important;
+    color: #F3EDDD !important;
+    border: 1px solid rgba(184, 150, 74, 0.4) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .policy-printable .policy-card {
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  header,
+  nav,
+  footer,
+  .print\:hidden,
+  .no-print,
+  button,
+  [role="banner"],
+  [role="contentinfo"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

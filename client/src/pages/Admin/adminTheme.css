@@ -1,0 +1,193 @@
+/* ==========================================================================
+   MARICHIN HOMESTAY — ADMIN LIGHT THEME TOKENS & BASE STYLES
+   Scoped to .admin-theme so the public website remains completely untouched.
+   ========================================================================== */
+
+.admin-theme {
+  --admin-bg: #F6F3EA;
+  --admin-surface: #FFFFFF;
+  --admin-surface-subtle: #FAF8F2;
+  --admin-surface-muted: #F1ECE0;
+  --admin-border: #E7E0CF;
+  --admin-input-border: #D9D2BF;
+
+  --admin-text: #1A2A21;
+  --admin-muted: #5F6B62;
+  --admin-heading: #0F2A20;
+
+  --admin-gold: #B8964A;
+  --admin-gold-hover: #A38238;
+  --admin-gold-soft: #FBF6E8;
+  --admin-gold-text: #78591C;
+
+  --admin-sidebar-bg: #0F2A20;
+  --admin-sidebar-surface: #143528;
+  --admin-sidebar-border: #1B4332;
+  --admin-sidebar-text: #F3EDDD;
+  --admin-sidebar-muted: #B9C4B8;
+
+  --admin-table-head: #EEF2EA;
+  --admin-table-stripe: #FAF8F4;
+  --admin-table-hover: #F2F5EE;
+
+  --admin-shadow-card: 0 2px 10px rgba(15, 42, 32, 0.05), 0 1px 3px rgba(15, 42, 32, 0.04);
+  --admin-shadow-elevated: 0 10px 28px rgba(15, 42, 32, 0.12);
+
+  /* KPI Accent Colors */
+  --admin-accent-green: #1B4332;
+  --admin-accent-gold: #B8964A;
+  --admin-accent-teal: #0F766E;
+  --admin-accent-terracotta: #A8654A;
+  --admin-accent-amber: #B7791F;
+  --admin-accent-red: #B42318;
+
+  background-color: var(--admin-bg);
+  color: var(--admin-text);
+  color-scheme: light;
+}
+
+.admin-theme h1,
+.admin-theme h2,
+.admin-theme h3,
+.admin-theme h4 {
+  color: var(--admin-heading);
+}
+
+/* Keep sidebar headings/text crisp light-on-dark */
+.admin-theme .admin-sidebar,
+.admin-theme .admin-sidebar h1,
+.admin-theme .admin-sidebar h2,
+.admin-theme .admin-sidebar h3,
+.admin-theme .admin-sidebar h4 {
+  color: var(--admin-sidebar-text);
+}
+
+/* Unified surface cards */
+.admin-theme .admin-card {
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  box-shadow: var(--admin-shadow-card);
+  color: var(--admin-text);
+}
+
+.admin-theme .admin-subcard {
+  background-color: var(--admin-surface-subtle);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  color: var(--admin-text);
+}
+
+/* Unified form inputs inside light admin surfaces */
+.admin-theme .admin-main input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.admin-theme .admin-main select,
+.admin-theme .admin-main textarea,
+.admin-theme .admin-modal-card input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.admin-theme .admin-modal-card select,
+.admin-theme .admin-modal-card textarea,
+.admin-theme .admin-login-card input:not([type="checkbox"]):not([type="radio"]),
+.admin-theme .admin-login-card select,
+.admin-theme .admin-login-card textarea {
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-input-border);
+  color: var(--admin-text);
+  color-scheme: light;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-theme .admin-main input:not([type="checkbox"]):not([type="radio"]):not([type="file"])::placeholder,
+.admin-theme .admin-main textarea::placeholder,
+.admin-theme .admin-modal-card input::placeholder,
+.admin-theme .admin-modal-card textarea::placeholder,
+.admin-theme .admin-login-card input::placeholder {
+  color: var(--admin-muted);
+  opacity: 0.78;
+}
+
+.admin-theme .admin-main input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+.admin-theme .admin-main select:focus,
+.admin-theme .admin-main textarea:focus,
+.admin-theme .admin-modal-card input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+.admin-theme .admin-modal-card select:focus,
+.admin-theme .admin-modal-card textarea:focus,
+.admin-theme .admin-login-card input:focus {
+  outline: none;
+  border-color: var(--admin-heading);
+  box-shadow: 0 0 0 3px rgba(15, 42, 32, 0.14);
+}
+
+/* Primary, Secondary, and Destructive buttons */
+.admin-theme .admin-btn-primary {
+  background-color: var(--admin-gold);
+  color: var(--admin-heading);
+  font-weight: 700;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.admin-theme .admin-btn-primary:hover:not(:disabled) {
+  background-color: var(--admin-gold-hover);
+}
+
+.admin-theme .admin-btn-secondary {
+  background-color: var(--admin-heading);
+  color: #FFFFFF;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+.admin-theme .admin-btn-secondary:hover:not(:disabled) {
+  background-color: #1B4332;
+}
+
+.admin-theme .admin-btn-outline {
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-input-border);
+  color: var(--admin-heading);
+  font-weight: 600;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.admin-theme .admin-btn-outline:hover:not(:disabled) {
+  background-color: var(--admin-table-head);
+  border-color: var(--admin-heading);
+}
+
+/* Unified table styling */
+.admin-theme .admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-theme .admin-table thead {
+  background-color: var(--admin-table-head);
+  color: var(--admin-heading);
+  border-bottom: 1px solid var(--admin-border);
+}
+.admin-theme .admin-table tbody tr {
+  background-color: var(--admin-surface);
+  border-bottom: 1px solid var(--admin-border);
+  transition: background-color 0.12s ease;
+}
+.admin-theme .admin-table tbody tr:nth-child(even) {
+  background-color: var(--admin-table-stripe);
+}
+.admin-theme .admin-table tbody tr:hover {
+  background-color: var(--admin-table-hover);
+}
+
+/* Custom thin light scrollbar inside admin */
+.admin-theme .admin-main::-webkit-scrollbar,
+.admin-theme .admin-modal-card::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.admin-theme .admin-main::-webkit-scrollbar-track,
+.admin-theme .admin-modal-card::-webkit-scrollbar-track {
+  background: var(--admin-bg);
+}
+.admin-theme .admin-main::-webkit-scrollbar-thumb,
+.admin-theme .admin-modal-card::-webkit-scrollbar-thumb {
+  background: var(--admin-input-border);
+  border-radius: 4px;
+}
+.admin-theme .admin-main::-webkit-scrollbar-thumb:hover,
+.admin-theme .admin-modal-card::-webkit-scrollbar-thumb:hover {
+  background: var(--admin-gold);
+}
+
