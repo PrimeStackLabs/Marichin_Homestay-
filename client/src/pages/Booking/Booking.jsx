@@ -51,6 +51,7 @@ import {
   calculateTierRefund,
   formatCancellationSummaryText
 } from '../../utils/refundPolicy';
+import { normalizeImageUrl } from '../../utils/imageUrl';
 
 const getLocalYMD = (d = new Date()) => {
   const date = d instanceof Date ? d : new Date(d);
@@ -1221,11 +1222,13 @@ export const Booking = () => {
                         const isSingle = (room.slug || '').includes('single');
                         const isSuite = (room.slug || '').includes('suite');
                         const hasBalcony = getRoomBalcony(room);
+                        const defaultFallback = isSuite ? '/images/realimage/livingroom.jpeg' : '/images/realimage/balconyroom.jpeg';
 
-                        const roomPhoto = room.images?.[0] || (
+                        const rawPhoto = room.images?.[0] || (
                           isSuite ? '/images/realimage/livingroom.jpeg' :
                           isSingle ? null : '/images/realimage/balconyroom.jpeg'
                         );
+                        const roomPhoto = rawPhoto ? normalizeImageUrl(rawPhoto) : null;
 
                         const roomAdultLimit = Number(room.maxAdults) || 2;
                         const roomChildLimit = room.maxChildren !== undefined ? Number(room.maxChildren) : (isSingle ? 0 : (isSuite ? 2 : 1));
@@ -1266,9 +1269,13 @@ export const Booking = () => {
                                   </div>
                                 ) : (
                                   <img
-                                    src={roomPhoto || '/images/realimage/balconyroom.jpeg'}
+                                    src={roomPhoto || defaultFallback}
                                     alt={room.name}
                                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                    onError={(e) => {
+                                      e.currentTarget.onerror = null;
+                                      e.currentTarget.src = defaultFallback;
+                                    }}
                                   />
                                 )}
 

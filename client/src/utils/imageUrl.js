@@ -6,23 +6,47 @@ export const getBackendBaseUrl = () => {
   if (apiBase.startsWith('http://') || apiBase.startsWith('https://')) {
     return apiBase.replace(/\/api\/?$/, '');
   }
+  // Production fallback if VITE_API_BASE_URL is not set at build time
+  if (typeof window !== 'undefined' && window.location.hostname.includes('marichinhomestay.in')) {
+    return 'https://marichin-homestay-api-g4jk.onrender.com';
+  }
   return '';
 };
 
 /**
  * Resolves media URLs (video, audio, uploaded files).
- * If the path is relative (e.g. /uploads/video.mp4) and API is remote (e.g. Render),
+ * If the path is relative (e.g. /uploads/video.mp4) or a bare filename,
  * it prepends the backend base origin.
  */
 export const resolveMediaUrl = (url) => {
   if (!url || typeof url !== 'string') return '';
   const trimmed = url.trim();
 
+  // If already full URL or inline data URI
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:')) {
+    return trimmed;
+  }
+
+  const backend = getBackendBaseUrl();
+
+  // If starts with /uploads/
   if (trimmed.startsWith('/uploads/')) {
-    const backend = getBackendBaseUrl();
-    if (backend) {
-      return `${backend}${trimmed}`;
-    }
+    return backend ? `${backend}${trimmed}` : trimmed;
+  }
+
+  // If starts with uploads/ (missing leading slash)
+  if (trimmed.startsWith('uploads/')) {
+    return backend ? `${backend}/${trimmed}` : `/${trimmed}`;
+  }
+
+  // Local frontend assets stay on current host
+  if (trimmed.startsWith('/images/') || trimmed.startsWith('/assets/')) {
+    return trimmed;
+  }
+
+  // Bare uploaded filename (e.g. realx-1794847955316-198434.png, homecta-..., hero-...)
+  if (/^[a-zA-Z0-9._-]+\.(jpe?g|png|webp|mp4|webm)$/i.test(trimmed)) {
+    return backend ? `${backend}/uploads/${trimmed}` : `/uploads/${trimmed}`;
   }
 
   return trimmed;
@@ -67,3 +91,5 @@ export const isGoogleDriveUrl = (url) => {
   return url.includes('drive.google.com') || url.includes('docs.google.com') || url.includes('googleusercontent.com');
 };
 
+export const DEFAULT_ROOM_FALLBACK = '/images/realimage/real3.jpeg';
+export const DEFAULT_SUITE_FALLBACK = '/images/realimage/real4.jpeg';

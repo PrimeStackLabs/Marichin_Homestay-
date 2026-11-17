@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { InclusionsSection } from '../../components/Inclusions/InclusionsSection';
 import { getRoomBalcony } from '../../utils/homestayFormatting';
+import { normalizeImageUrl } from '../../utils/imageUrl';
 
 export const Rooms = () => {
   const { t, language } = useLanguage();
@@ -180,10 +181,13 @@ export const Rooms = () => {
       {displayRooms.map((room, index) => {
         const theme = getSectionTheme(index);
         const isForest = theme === 'forest';
+        const isSuite = (room.slug || room.name || '').toLowerCase().includes('suite');
+        const fallbackImg = isSuite ? '/images/realimage/real4.jpeg' : '/images/realimage/real3.jpeg';
         const hasImages = Array.isArray(room.images) && room.images.length > 0;
-        const mainImage = hasImages
+        const rawMain = hasImages
           ? (typeof room.images[0] === 'string' ? room.images[0] : room.images[0].url)
           : null;
+        const mainImage = rawMain ? normalizeImageUrl(rawMain) : null;
         const roomPrice = Number(room.pricePerNight ?? room.price ?? 8000);
         const weekendRoomPrice = Number(room.weekendPrice ?? roomPrice);
         const hasWeekendDiff = weekendRoomPrice > 0 && weekendRoomPrice !== roomPrice;
@@ -205,6 +209,10 @@ export const Rooms = () => {
                           alt={room.name}
                           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = fallbackImg;
+                          }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20" />
                         <button
@@ -368,6 +376,10 @@ export const Rooms = () => {
                         alt={room.name}
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = fallbackImg;
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
                       <button
@@ -544,8 +556,10 @@ export const Rooms = () => {
             {/* Modal Body */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {(() => {
+                const isSuiteModal = (activeModalRoom.slug || activeModalRoom.name || '').toLowerCase().includes('suite');
+                const modalFallback = isSuiteModal ? '/images/realimage/real4.jpeg' : '/images/realimage/real3.jpeg';
                 const modalImages = Array.isArray(activeModalRoom.images) && activeModalRoom.images.length > 0
-                  ? activeModalRoom.images.map(img => (typeof img === 'string' ? img : img.url)).filter(Boolean)
+                  ? activeModalRoom.images.map(img => (typeof img === 'string' ? img : img.url)).filter(Boolean).map(normalizeImageUrl)
                   : [];
 
                 if (modalImages.length === 0) {
@@ -575,6 +589,10 @@ export const Rooms = () => {
                           src={currentImg}
                           alt="Room View"
                           className="w-full h-full object-cover transition-all duration-500"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = modalFallback;
+                          }}
                         />
                       )}
 
@@ -611,7 +629,15 @@ export const Rooms = () => {
                               idx === activeImgIdx ? 'border-[#B8964A] scale-105' : 'border-transparent opacity-60 hover:opacity-100'
                             }`}
                           >
-                            <img src={img} alt="thumb" className="w-full h-full object-cover" />
+                            <img
+                              src={img}
+                              alt="thumb"
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = modalFallback;
+                              }}
+                            />
                           </button>
                         ))}
                       </div>

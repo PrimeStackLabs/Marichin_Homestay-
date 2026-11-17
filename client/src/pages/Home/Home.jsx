@@ -628,10 +628,12 @@ export const Home = () => {
               const isSuite = (room.slug || room.name || '').toLowerCase().includes('suite');
               const isSingle = (room.slug || room.name || '').toLowerCase().includes('single');
               const hasBalcony = getRoomBalcony(room);
+              const fallbackImage = isSuite ? '/images/realimage/real4.jpeg' : '/images/realimage/real3.jpeg';
               const hasImages = Array.isArray(room.images) && room.images.length > 0;
-              const mainImage = hasImages
+              const rawMainImage = hasImages
                 ? (typeof room.images[0] === 'string' ? room.images[0] : room.images[0].url)
                 : (isSuite ? '/images/realimage/real4.jpeg' : (!isSingle ? '/images/realimage/real3.jpeg' : null));
+              const mainImage = rawMainImage ? normalizeImageUrl(rawMainImage) : null;
               const roomPrice = Number(room.pricePerNight ?? room.price ?? (isSuite ? 10000 : isSingle ? 6000 : 8000));
               const weekendRoomPrice = Number(room.weekendPrice ?? roomPrice);
               const totalUnits = room.totalUnits || (isSingle ? 1 : 2);
@@ -677,6 +679,10 @@ export const Home = () => {
                           alt={room.name}
                           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = fallbackImage;
+                          }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       </>

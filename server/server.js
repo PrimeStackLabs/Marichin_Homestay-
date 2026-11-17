@@ -18,6 +18,12 @@ import publicRoutes from './routes/publicRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import { expireStaleHolds } from './utils/inventoryEngine.js';
+import {
+  getGridFSFile,
+  openGridFSDownloadStream,
+  syncDiskUploadsToGridFS
+} from './utils/gridfsStorage.js';
+import fs from 'fs';
 
 // Resolve environment variables
 const __filename = fileURLToPath(import.meta.url);
@@ -154,6 +160,41 @@ app.use(
 app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 app.use(cookieParser());
 
+// Dynamic GridFS file handler: if file was wiped from local disk by a Render restart,
+// stream it directly from MongoDB Atlas GridFS and cache it back to disk!
+app.get('/uploads/:filename', async (req, res, next) => {
+  const safeFilename = path.basename(req.params.filename);
+  const localFilePath = path.join(__dirname, 'uploads', safeFilename);
+
+  if (fs.existsSync(localFilePath)) {
+    return next(); // Let express.static serve it with byte-range support
+  }
+
+  try {
+    const gridFile = await getGridFSFile(safeFilename);
+    if (!gridFile) {
+      return res.status(404).json({ success: false, message: 'File not found' });
+    }
+
+    res.set('Content-Type', gridFile.contentType || 'application/octet-stream');
+    res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.set('Accept-Ranges', 'bytes');
+
+    const writeStream = fs.createWriteStream(localFilePath);
+    const readStream = openGridFSDownloadStream(gridFile._id);
+
+    readStream.on('error', (err) => {
+      console.warn('[GridFS Stream Error]:', err.message);
+      if (!res.headersSent) res.status(500).end();
+    });
+
+    readStream.pipe(writeStream);
+    readStream.pipe(res);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Static folder for uploaded files (explicit byte-range support for streamed banner videos)
 app.use(
   '/uploads',
@@ -206,6 +247,9 @@ if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`🚀 Marichin Homestay API Server listening on port ${PORT}`);
     console.log(`📡 Client URL: ${CLIENT_URL}`);
+
+    // Sync disk uploads with MongoDB GridFS for persistence
+    syncDiskUploadsToGridFS(path.join(__dirname, 'uploads')).catch(() => {});
 
     // Sweep expired payment holds immediately on startup and every 60 seconds thereafter
     expireStaleHolds().catch(() => {});

@@ -38,6 +38,7 @@ import {
   deleteUploadedFileIfSafe
 } from '../utils/heroBanner.js';
 import { logActivity } from '../middleware/activityLogger.js';
+import { saveFileToGridFS, deleteFileFromGridFS } from '../utils/gridfsStorage.js';
 import {
   toDateStr,
   getTodayISTStr,
@@ -2702,6 +2703,11 @@ export const uploadImage = async (req, res, next) => {
 
     const fileUrl = `/uploads/${req.file.filename}`;
 
+    // Persist to MongoDB GridFS so it survives Render restarts
+    await saveFileToGridFS(req.file.filename, req.file.path, req.file.mimetype).catch((err) => {
+      console.warn('[GridFS] Warning: Failed to persist upload to GridFS:', err.message);
+    });
+
     res.status(201).json({
       success: true,
       message: 'Image uploaded successfully',
@@ -2727,6 +2733,9 @@ export const deleteImage = async (req, res, next) => {
       fs.unlinkSync(filePath);
     }
 
+    // Also delete from MongoDB GridFS
+    await deleteFileFromGridFS(safeFilename);
+
     // Also delete any gallery image matching this filename if present
     await GalleryImage.deleteOne({ url: { $regex: safeFilename } });
 
@@ -2750,6 +2759,11 @@ export const uploadHeroBannerMedia = async (req, res, next) => {
       req.heroMediaKind ||
       (String(req.file.mimetype || '').startsWith('image/') ? 'poster' : 'video');
     const fileUrl = `/uploads/${req.file.filename}`;
+
+    // Persist to MongoDB GridFS so it survives Render restarts
+    await saveFileToGridFS(req.file.filename, req.file.path, req.file.mimetype).catch((err) => {
+      console.warn('[GridFS] Warning: Failed to persist hero media to GridFS:', err.message);
+    });
 
     await logActivity({
       req,
@@ -2804,6 +2818,7 @@ export const deleteHeroBannerMedia = async (req, res, next) => {
     }
 
     deleteUploadedFileIfSafe(targetUrl, uploadsDir);
+    await deleteFileFromGridFS(safeFilename);
     res.status(200).json({
       success: true,
       message: 'Temporary hero banner media discarded',

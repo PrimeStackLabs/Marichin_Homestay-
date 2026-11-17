@@ -23,6 +23,7 @@ import {
   DEFAULT_HERO_BANNER,
   normalizeHeroBannerSettingsClient
 } from '../utils/heroBannerDefaults';
+import { normalizeImageUrl } from '../utils/imageUrl';
 import {
   isPlaceholderPhone,
   isPlaceholderEmail,
@@ -340,21 +341,23 @@ const normalizeRoom = (r) => {
     ? Number(rawPrice)
     : defaultPrice;
 
-  const rawImages = Array.isArray(r.images) && r.images.length > 0
+  const rawImages = (Array.isArray(r.images) && r.images.length > 0
     ? r.images.map(img => (typeof img === 'string' ? img : (img?.url || ''))).filter(Boolean)
-    : (r.image ? [typeof r.image === 'string' ? r.image : (r.image?.url || '')].filter(Boolean) : []);
+    : (r.image ? [typeof r.image === 'string' ? r.image : (r.image?.url || '')].filter(Boolean) : []))
+    .map(normalizeImageUrl);
 
   const defaultImages = isStandard
     ? ['/images/realimage/real3.jpeg', '/images/realimage/real5.jpeg']
     : (isSuite
         ? ['/images/realimage/real4.jpeg', '/images/realimage/real6.jpeg']
-        : []);
+        : ['/images/realimage/real3.jpeg']);
 
   const images = rawImages.length > 0
     ? rawImages
-    : (isSingle ? [] : defaultImages);
+    : defaultImages;
 
-  const mainImage = images[0] || (typeof r.image === 'string' ? r.image : r.image?.url) || '';
+  const rawMain = (typeof r.image === 'string' ? r.image : r.image?.url) || images[0] || defaultImages[0];
+  const mainImage = normalizeImageUrl(rawMain);
 
   return {
     ...r,
@@ -725,8 +728,12 @@ export const AdminProvider = ({ children }) => {
         }
 
         if (galleryRes.status === 'fulfilled' && Array.isArray(galleryRes.value?.data)) {
-          setGallery(galleryRes.value.data);
-          safeSetStorage('marichin_gallery', galleryRes.value.data);
+          const normalizedGallery = galleryRes.value.data.map(img => ({
+            ...img,
+            url: normalizeImageUrl(img.url || img.image || img.src)
+          }));
+          setGallery(normalizedGallery);
+          safeSetStorage('marichin_gallery', normalizedGallery);
           setApiOnline(true);
         }
 

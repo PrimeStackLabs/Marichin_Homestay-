@@ -27,3 +27,5 @@ search_claims.mjs
 claims_hits.json
 test-browser.js
 screenshots/
+*.zip
+client/dist-fast/
