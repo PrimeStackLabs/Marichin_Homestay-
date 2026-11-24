@@ -244,10 +244,25 @@ export const Footer = () => {
             </h4>
             <div className="space-y-2.5 text-xs text-[#B9C4B8]">
               {displayAddress && (
-                <p className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-[#B8964A] flex-shrink-0 mt-0.5" />
-                  <span>{displayAddress}</span>
-                </p>
+                <div className="space-y-1">
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 hover:text-[#D9BC7A] transition-colors group"
+                  >
+                    <MapPin className="w-4 h-4 text-[#B8964A] flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                    <span>{displayAddress}</span>
+                  </a>
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[11px] text-[#D9BC7A] hover:underline pl-6 font-mono"
+                  >
+                    <span>📍 12°25'32.1"N 75°54'42.8"E (Directions)</span>
+                  </a>
+                </div>
               )}
               {displayPhone && cleanTelPhone && (
                 <p className="flex items-center gap-2">

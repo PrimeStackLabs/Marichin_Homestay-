@@ -1449,8 +1449,14 @@ export const getBookingPass = async (req, res, next) => {
           kn: formatCancellationSummaryText({ ...siteSettings, cancellationTiers: resolvedPassTiers }, 'kn')
         },
         googleMapsUrl:
-          siteSettings.googleMapsEmbedUrl ||
-          'https://maps.google.com/?q=Marichin+Homestay+Kushalnagar'
+          siteSettings.googleMapsShareUrl ||
+          'https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889',
+        directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889',
+        coordinates: {
+          lat: 12.425583,
+          lng: 75.911889,
+          dms: "12°25'32.1\"N 75°54'42.8\"E"
+        }
       }
     };
 

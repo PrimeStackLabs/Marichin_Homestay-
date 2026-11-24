@@ -14,7 +14,9 @@ import {
   Printer,
   Loader2,
   PhoneCall,
-  Star
+  Star,
+  MapPin,
+  Navigation
 } from 'lucide-react';
 import {
   formatDisplayDate,
@@ -93,6 +95,13 @@ export const BookingPassCard = ({
   // Property info
   const propName = siteSettings?.propertyName || 'Marichin Homestay';
   const propAddress = siteSettings?.address || 'Chikkabettageri Village, Gudde Hosur Post, Kushalnagar, Kodagu, Karnataka 571234';
+  const stayCoordinates = {
+    lat: 12.425583,
+    lng: 75.911889,
+    dms: "12°25'32.1\"N 75°54'42.8\"E"
+  };
+  const directionsUrl = (siteSettings?.googleMapsShareUrl && siteSettings.googleMapsShareUrl.trim())
+    || `https://www.google.com/maps/dir/?api=1&destination=${stayCoordinates.lat},${stayCoordinates.lng}`;
   const regNumber = (siteSettings?.registrationNumber || '').trim();
   const publicContact = getPublicHostContact(siteSettings);
   const displayHostPhone = publicContact.whatsapp || publicContact.phone || '';
@@ -151,6 +160,7 @@ export const BookingPassCard = ({
       const opt = {
         margin: 0,
         filename: `Marichin_Homestay_Pass_${code}.pdf`,
+        enableLinks: true,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
           scale: 2,
@@ -502,6 +512,20 @@ export const BookingPassCard = ({
             {displayHostPhone && <p className="leading-relaxed">📞 {displayHostPhone}</p>}
             {displayHostEmail && <p className="leading-relaxed break-all">✉️ {displayHostEmail}</p>}
             <p className="leading-relaxed break-words mt-0.5">{propAddress}</p>
+            <div className="mt-2.5 flex flex-col sm:items-end gap-1">
+              <a
+                href={directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#B8964A] hover:bg-[#D9BC7A] text-[#0F2A20] font-bold text-xs transition-colors shadow-sm"
+              >
+                <Navigation className="w-3.5 h-3.5" />
+                <span>{isKn ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್ ದಾರಿ (Get Directions)' : 'Get Google Maps Directions'}</span>
+              </a>
+              <span className="text-[10px] text-[#D9BC7A] font-mono">
+                📍 {stayCoordinates.dms}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -945,6 +969,44 @@ export const BookingPassCard = ({
               <p style={{ margin: '2px 0 0 0', wordBreak: 'break-word' }}>
                 {propAddress}
               </p>
+              <div style={{ marginTop: '8px' }}>
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-block',
+                    padding: '6px 12px',
+                    borderRadius: '6px',
+                    backgroundColor: '#B8964A',
+                    color: '#0F2A20',
+                    fontSize: '11px',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    letterSpacing: '0.02em'
+                  }}
+                >
+                  📍 {isKn ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್ ದಾರಿ (Get Directions)' : 'Get Google Maps Directions'}
+                </a>
+                <p style={{ margin: '3px 0 0 0', fontSize: '9.5px', color: '#D9BC7A', fontFamily: 'monospace' }}>
+                  GPS: {stayCoordinates.dms}
+                </p>
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    margin: '2px 0 0 0',
+                    fontSize: '8.5px',
+                    color: '#B9C4B8',
+                    textDecoration: 'underline',
+                    wordBreak: 'break-all',
+                    display: 'block'
+                  }}
+                >
+                  {directionsUrl}
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -990,6 +1052,16 @@ export const BookingPassCard = ({
               <Share2 className="w-4 h-4 text-[#25D366]" />
               <span>{isKn ? 'WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ' : 'Share on WhatsApp'}</span>
             </button>
+
+            <a
+              href={directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white border border-[#B8964A]/30 text-xs font-semibold text-[#0F2A20] hover:bg-[#FAF6EC] transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+            >
+              <Navigation className="w-4 h-4 text-[#B8964A]" />
+              <span>{isKn ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್ ದಾರಿ' : 'Google Maps Directions'}</span>
+            </a>
 
             {isPaid && (
               <Link

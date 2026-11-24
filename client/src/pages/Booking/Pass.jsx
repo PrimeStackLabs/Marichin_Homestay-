@@ -12,7 +12,8 @@ import {
   CheckCircle2,
   XCircle,
   ShieldCheck,
-  Calendar
+  Calendar,
+  Navigation
 } from 'lucide-react';
 import { formatDisplayDate } from '../../utils/whatsappMessages';
 
@@ -211,6 +212,15 @@ export const Pass = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-3 flex-shrink-0">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] text-[#0F2A20] hover:text-[#B8964A] font-semibold flex items-center gap-1.5 bg-[#FAF6EC] px-3 py-1.5 rounded-lg border border-[#B8964A]/30 transition-all shadow-xs"
+            >
+              <Navigation className="w-3.5 h-3.5 text-[#B8964A]" />
+              <span>{isKn ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್ ದಾರಿ (12°25\'32.1"N 75°54\'42.8"E)' : 'Directions (12°25\'32.1"N 75°54\'42.8"E)'}</span>
+            </a>
             <Link
               to="/refund-policy"
               className="text-[11px] text-[#0F2A20] hover:text-[#B8964A] hover:underline font-semibold"
@@ -224,6 +234,37 @@ export const Pass = () => {
               <span>{isKn ? 'ಸ್ಥಿತಿ ಪೋರ್ಟಲ್' : 'Status Lookup'}</span>
             </Link>
           </div>
+        </div>
+
+        {/* Live Location & Driving Directions Card */}
+        <div className="bg-white rounded-2xl border border-[#B8964A]/30 p-4 sm:p-5 shadow-sm print:hidden no-print flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-[#0F2A20] text-[#D9BC7A] flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+              <Navigation className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#A8654A] block">
+                {isKn ? 'ಹೋಂಸ್ಟೇ ಇರುವ ಸ್ಥಳ & ನೇರ ಮಾರ್ಗ' : 'Homestay Location & Driving Directions'}
+              </span>
+              <h4 className="font-serif text-base font-semibold text-[#0F2A20] mt-0.5">
+                Chikkabettageri Village, Kushalnagar (12°25&apos;32.1&quot;N 75°54&apos;42.8&quot;E)
+              </h4>
+              <p className="text-xs text-[#5F6B62] mt-0.5">
+                {isKn
+                  ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ಲೈವ್ ನಿರ್ದೇಶನ ಪಡೆಯಲು ಕೆಳಗಿನ ಬಟನ್ ಕ್ಲಿಕ್ ಮಾಡಿ.'
+                  : 'Click below to start live turn-by-turn driving directions directly to our estate gate.'}
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C8A55A] to-[#B8964A] hover:from-[#D9BC7A] hover:to-[#C8A55A] text-[#0F2A20] font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer flex-shrink-0"
+          >
+            <Navigation className="w-4 h-4" />
+            <span>{isKn ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್ ದಾರಿ' : 'Start Google Maps Navigation'}</span>
+          </a>
         </div>
 
         {/* PASS CARD COMPONENT */}

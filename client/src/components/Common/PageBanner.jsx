@@ -589,7 +589,7 @@ export const PageBanner = ({
                     const showWhatsapp = !isPlaceholderPhone(whatsapp);
                     const cleanPhone = `+${cleanInternationalPhone(phone)}`;
                     const cleanWa = cleanInternationalPhone(whatsapp);
-                    const mapsUrl = googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+                    const mapsUrl = googleMapsUrl || `https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889`;
 
                     return (
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">

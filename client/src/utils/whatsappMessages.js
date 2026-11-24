@@ -273,7 +273,8 @@ const buildBookingConfirmedText = (booking, siteSettings, language, baseUrl) => 
   const passUrl = origin ? `${origin}/pass/${passToken}` : `/pass/${passToken}`;
 
   const hostAddress = (siteSettings?.address || 'Chikkabettageri Village, Gudde Hosur Post, Kushalnagar, Kodagu District, Karnataka 571234').trim();
-  const defaultMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hostAddress)}`;
+  const stayGps = "12°25'32.1\"N 75°54'42.8\"E";
+  const defaultMapUrl = 'https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889';
   const mapUrl = (siteSettings?.googleMapsShareUrl && siteSettings.googleMapsShareUrl.trim()) || defaultMapUrl;
 
   const hostPhone = siteSettings?.whatsappNumber || siteSettings?.whatsapp || (siteSettings?.phones && siteSettings.phones[0]) || '';
@@ -309,9 +310,11 @@ const buildBookingConfirmedText = (booking, siteSettings, language, baseUrl) => 
         ? `ನಿಮ್ಮ ಆಗಮನಕ್ಕಾಗಿ ನಾವು ಎದುರುನೋಡುತ್ತಿದ್ದೇವೆ! ಯಾವುದೇ ಪ್ರಶ್ನೆಗಳಿಗೆ ಸಂಪರ್ಕಿಸಿ: ${cleanPhone}.`
         : `ನಿಮ್ಮ ಆಗಮನಕ್ಕಾಗಿ ನಾವು ಎದುರುನೋಡುತ್ತಿದ್ದೇವೆ!`,
       ``,
-      `${EMOJI.LOCATION} *ಹೋಂಸ್ಟೇ ವಿಳಾಸ & ಮಾರ್ಗ:*`,
-      `${hostAddress}`,
-      `${mapUrl}`
+      `${EMOJI.LOCATION} *ಹೋಂಸ್ಟೇ ಇರುವ ನಿಖರ ಸ್ಥಳ ಮತ್ತು ಲೈವ್ ಮಾರ್ಗ (GPS):*`,
+      `• ಜಿಪಿಎಸ್ ಪಿನ್: ${stayGps}`,
+      `• ವಿಳಾಸ: ${hostAddress}`,
+      `• ಲೈವ್ ಗೂಗಲ್ ಮ್ಯಾಪ್ ದಾರಿ: ${mapUrl}`,
+      `(ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ನೇರ ದಾರಿ ಪಡೆಯಲು ಮೇಲಿನ ಲಿಂಕ್ ಟ್ಯಾಪ್ ಮಾಡಿ)`
     ].join('\n');
   }
 
@@ -344,9 +347,11 @@ const buildBookingConfirmedText = (booking, siteSettings, language, baseUrl) => 
       ? `We look forward to hosting you in peaceful coffee country! For any queries or arrival coordination, contact: ${cleanPhone}.`
       : `We look forward to hosting you in peaceful coffee country!`,
     ``,
-    `${EMOJI.LOCATION} *Homestay Location & Directions:*`,
-    `${hostAddress}`,
-    `${mapUrl}`
+    `${EMOJI.LOCATION} *Official Stay Location & Live Driving Navigation:*`,
+    `• Exact GPS Pin: ${stayGps}`,
+    `• Address: ${hostAddress}`,
+    `• Live Google Maps Directions: ${mapUrl}`,
+    `(Tap the link above on your mobile phone for direct turn-by-turn navigation straight to our estate gate)`
   ].join('\n');
 };
 
@@ -441,6 +446,11 @@ const buildDatesChangedText = (booking, siteSettings, language, baseUrl) => {
   const origin = getOrigin(baseUrl);
   const passUrl = origin ? `${origin}/pass/${passToken}` : `/pass/${passToken}`;
 
+  const hostAddress = (siteSettings?.address || 'Chikkabettageri Village, Gudde Hosur Post, Kushalnagar, Kodagu District, Karnataka 571234').trim();
+  const stayGps = "12°25'32.1\"N 75°54'42.8\"E";
+  const defaultMapUrl = 'https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889';
+  const mapUrl = (siteSettings?.googleMapsShareUrl && siteSettings.googleMapsShareUrl.trim()) || defaultMapUrl;
+
   if (isKn) {
     const guestsText = `${adults} ವಯಸ್ಕರು${children > 0 ? `, ${children} ಮಕ್ಕಳು` : ''}`;
     const nightsText = `${nights} ${nights > 1 ? 'ರಾತ್ರಿಗಳು' : 'ರಾತ್ರಿ'}`;
@@ -460,6 +470,12 @@ const buildDatesChangedText = (booking, siteSettings, language, baseUrl) => {
       ``,
       `*ನಿಮ್ಮ ಬುಕಿಂಗ್ ಪಾಸ್ (QR ಮತ್ತು ವಿವರಗಳು):*`,
       `${passUrl}`,
+      ``,
+      `${EMOJI.LOCATION} *ಹೋಂಸ್ಟೇ ಇರುವ ನಿಖರ ಸ್ಥಳ ಮತ್ತು ಲೈವ್ ಮಾರ್ಗ (GPS):*`,
+      `• ಜಿಪಿಎಸ್ ಪಿನ್: ${stayGps}`,
+      `• ವಿಳಾಸ: ${hostAddress}`,
+      `• ಲೈವ್ ಗೂಗಲ್ ಮ್ಯಾಪ್ ದಾರಿ: ${mapUrl}`,
+      `(ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ನೇರ ದಾರಿ ಪಡೆಯಲು ಮೇಲಿನ ಲಿಂಕ್ ಟ್ಯಾಪ್ ಮಾಡಿ)`,
       ``,
       `ನಿಮ್ಮ ಆಗಮನಕ್ಕಾಗಿ ನಾವು ಎದುರುನೋಡುತ್ತಿದ್ದೇವೆ!`
     ].join('\n');
@@ -483,6 +499,12 @@ const buildDatesChangedText = (booking, siteSettings, language, baseUrl) => {
     ``,
     `*Your booking pass (QR and details):*`,
     `${passUrl}`,
+    ``,
+    `${EMOJI.LOCATION} *Official Stay Location & Live Driving Navigation:*`,
+    `• Exact GPS Pin: ${stayGps}`,
+    `• Address: ${hostAddress}`,
+    `• Live Google Maps Directions: ${mapUrl}`,
+    `(Tap the link above on your mobile phone for direct turn-by-turn navigation straight to our estate gate)`,
     ``,
     `We look forward to welcoming you to coffee country!`
   ].join('\n');

@@ -88,6 +88,8 @@ export const seedDatabase = async () => {
     instagramUrl: 'https://www.instagram.com/coorg_marichin_homestay?utm_source=qr&cplk=bWd6MjhrcHducjVt',
     facebookUrl: 'https://www.facebook.com/profile.php?id=61596613283636',
     youtubeUrl: 'https://www.youtube.com/channel/UCaf39e4l1iRDA-CMj72q1gQ',
+    googleMapsEmbedUrl: 'https://maps.google.com/maps?q=12.425583,75.911889&t=m&z=16&output=embed',
+    googleMapsShareUrl: 'https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889',
     upiId: 'marichin@okaxis',
     checkInTime: '12:00 PM',
     checkOutTime: '11:00 AM',

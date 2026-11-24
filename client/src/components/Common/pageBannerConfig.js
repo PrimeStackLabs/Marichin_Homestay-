@@ -421,7 +421,7 @@ export const getPageBannerConfig = (pageKey, ctx = {}) => {
         phone: resolveHostPhone(siteSettings?.phone || siteSettings?.phones?.[0]),
         whatsapp: resolveHostPhone(siteSettings?.whatsapp || siteSettings?.whatsappNumber),
         address: siteSettings?.address || 'Chikkabettageri Village, Gudde Hosur Post, Kushalnagar, Kodagu District, Karnataka 571234',
-        googleMapsUrl: siteSettings?.googleMapsUrl || '',
+        googleMapsUrl: siteSettings?.googleMapsShareUrl || siteSettings?.googleMapsUrl || 'https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889',
         enquiryAnchor: '#enquiry-form'
       },
       floatingCards: [

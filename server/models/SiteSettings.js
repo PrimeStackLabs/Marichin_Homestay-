@@ -43,11 +43,11 @@ const siteSettingsSchema = new mongoose.Schema(
     },
     googleMapsEmbedUrl: {
       type: String,
-      default: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3896.792!2d75.9382!3d12.4589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDI3JzMyLjAiTiA3NcKwNTYnMTcuNSJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin'
+      default: 'https://maps.google.com/maps?q=12.425583,75.911889&t=m&z=16&output=embed'
     },
     googleMapsShareUrl: {
       type: String,
-      default: ''
+      default: 'https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889'
     },
     instagramUrl: {
       type: String,

@@ -6354,13 +6354,13 @@ export const AdminLayout = () => {
                   </label>
                   <input
                     type="url"
-                    placeholder="https://maps.app.goo.gl/... or leave empty to use default search link"
+                    placeholder="https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889 or leave empty for default GPS"
                     value={settingsForm.googleMapsShareUrl || ''}
                     onChange={(e) => setSettingsForm({ ...settingsForm, googleMapsShareUrl: e.target.value })}
                     className="w-full rounded-lg px-3 py-1.5 text-xs font-mono"
                   />
                   <span className="text-[10px] text-[var(--admin-muted)] mt-0.5 block">
-                    Direct share link sent to guests on WhatsApp. If left blank, a link is automatically built from the property address.
+                    Direct share link sent to guests on WhatsApp and Booking Pass. Default: 12°25'32.1&quot;N 75°54'42.8&quot;E (driving directions).
                   </span>
                 </div>
 
@@ -9156,6 +9156,19 @@ export const AdminLayout = () => {
                   className="text-[var(--admin-gold-text)] hover:underline font-mono truncate max-w-full sm:max-w-xs"
                 >
                   {`${window.location.origin}/pass/${modalData.booking?.passToken || modalData.bookingCode}`}
+                </a>
+              </div>
+
+              <div className="p-2.5 rounded-xl admin-subcard flex flex-wrap items-center justify-between gap-2 text-[11px]">
+                <span className="text-[var(--admin-muted)] font-medium">Estate GPS &amp; Directions:</span>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=12.425583,75.911889"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[var(--admin-gold-text)] hover:underline font-mono truncate max-w-full sm:max-w-xs flex items-center gap-1"
+                >
+                  <span>📍 12°25&apos;32.1&quot;N 75°54&apos;42.8&quot;E (Google Maps)</span>
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
             </div>
